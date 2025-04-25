@@ -57,11 +57,13 @@ You can customize the regex pattern used for validation:
 ## Default Conventional Commits Format
 
 The default pattern validates the following format:
+
 ```
 <type>[optional scope]: <description>
 ```
 
 Where `type` is one of:
+
 - feat: A new feature
 - fix: A bug fix
 - docs: Documentation changes
@@ -77,3 +79,4 @@ Where `type` is one of:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
