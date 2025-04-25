@@ -1,0 +1,20 @@
+name: Time to Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  time-to-review:
+    runs-on: ubuntu-latest
+    name: Calculate review time
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Calculate review time
+        uses: srajasimman/time-to-review@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
