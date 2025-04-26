@@ -46,7 +46,17 @@ async function run() {
 
     // Fail the workflow if errors are found
     if (hasError) {
-      core.setFailed(`One or more commits have invalid message format.\n${errorMessages.join('\n')}\n\nPlease follow the Conventional Commits format: <type>[optional scope]: <description>\nExample: feat(auth): add login functionality\n\nFor more information, visit: https://www.conventionalcommits.org/`);
+      const errorSummary = `One or more commits have invalid message format.\n${errorMessages.join('\n')}\n\nPlease follow the Conventional Commits format: <type>[optional scope]: <description>\nExample: feat(auth): add login functionality\n\nFor more information, visit: https://www.conventionalcommits.org/`;
+      // comment on the PR with the error summary
+      await octokit.rest.issues.createComment({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: pullRequest.number,
+        body: errorSummary,
+      });
+      core.info('Commented on PR with error summary.');
+      // Set the action as failed
+      core.setFailed(errorSummary);
     } else {
       core.info('✅ All commit messages have valid format.');
     }
