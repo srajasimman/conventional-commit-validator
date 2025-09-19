@@ -5,7 +5,17 @@ async function run() {
   try {
     // Get inputs from workflow
     const token = core.getInput('github-token', { required: true });
-    const pattern = core.getInput('pattern') || '^(Merge branch \'[^\']+\' into [^\s]+|Revert ".*"|Create PR for #\d+|(?:(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)(\([a-z0-9\-]+\))?: .*))$';
+
+    const mergeBranchPattern = "Merge branch '[^']+' into [^\\s]+";
+    const revertPattern = 'Revert ".*"';
+    const createPrPattern = 'Create PR for #\\d+';
+    const types = [
+      'feat', 'fix', 'chore', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'revert'
+    ].join('|');
+    const conventionalPattern = `(?:(${types})(\\([a-z0-9\\-]+\\))?: .*)`;
+
+    const defaultPattern = `^(${mergeBranchPattern}|${revertPattern}|${createPrPattern}|${conventionalPattern})$`;
+    const pattern = core.getInput('pattern') || defaultPattern;
     const regexPattern = new RegExp(pattern);
 
     // Create octokit client
