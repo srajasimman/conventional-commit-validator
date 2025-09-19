@@ -6,15 +6,15 @@ async function run() {
     // Get inputs from workflow
     const token = core.getInput('github-token', { required: true });
 
-    const mergeBranchPattern = "Merge branch '[^']+' into [^\\s]+";
+    const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"] into [^\\s]+';
     const revertPattern = 'Revert ".*"';
-    const createPrPattern = 'Create PR for #\\d+';
+    const createPrPattern = core.getInput('create-pr-pattern') || 'Create PR for #\\d+';
     const types = [
       'feat', 'fix', 'chore', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'revert'
     ].join('|');
-    const conventionalPattern = `(?:(${types})(\\([a-z0-9\\-]+\\))?: .*)`;
+    const conventionalPattern = `(?:(${types})(\\([a-z0-9\\-]+\\))?(!)?: .*)`;
 
-    const defaultPattern = `^(${mergeBranchPattern}|${revertPattern}|${createPrPattern}|${conventionalPattern})$`;
+    const defaultPattern = `^(${mergeBranchPattern}|${revertPattern}${createPrPattern ? '|' + createPrPattern : ''}|${conventionalPattern})$`;
     const pattern = core.getInput('pattern') || defaultPattern;
     const regexPattern = new RegExp(pattern);
 
