@@ -8,7 +8,7 @@ async function run() {
 
     const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"] into [^\\s]+';
     const revertPattern = 'Revert ".*"';
-    const createPrPattern = core.getInput('create-pr-pattern') || 'Create PR for #\\d+';
+    const createPrPattern = 'Create PR for #\\d+';
     const types = [
       'feat', 'fix', 'chore', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'revert'
     ].join('|');

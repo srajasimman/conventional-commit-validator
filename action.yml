@@ -5,14 +5,9 @@ inputs:
     description: "GitHub token for API access"
     required: true
     default: ${{ github.token }}
-  pattern:
-    description: "Regex pattern for commit message validation"
-    required: false
-    default: '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(\w+\))?: .+$'
 runs:
   using: "node20"
   main: "dist/index.js"
 branding:
   icon: "check-circle"
   color: "green"
-
