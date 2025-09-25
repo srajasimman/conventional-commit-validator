@@ -5,6 +5,9 @@ inputs:
     description: "GitHub token for API access"
     required: true
     default: ${{ github.token }}
+  pattern:
+    description: "Regex pattern to validate commit messages"
+    required: false
 runs:
   using: "node20"
   main: "dist/index.js"
