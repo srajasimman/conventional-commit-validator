@@ -1,4 +1,4 @@
-name: Validate Commit Messages
+name: Pull Request Checks
 
 on:
   pull_request:
@@ -7,24 +7,40 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  issues: write
 
 jobs:
   validate-commits:
     runs-on: ubuntu-latest
+    name: Validate Commit Messages
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-      
+
       - name: Validate Commit Messages
-        uses: ./  # Assumes action is in the root directory
+        uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Optional: customize regex pattern
           # pattern: '^(feat|fix|docs)(\(\w+\))?: .+$'
+
+  time-to-review:
+    runs-on: ubuntu-latest
+    name: Calculate Review Time
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Calculate review time
+        uses: srajasimman/time-to-review@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
