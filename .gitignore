@@ -1,3 +1,9 @@
 node_modules/
 lib/
-dist/
+# dist/ is intentionally tracked — GitHub Actions requires the bundled output
+# to be committed so callers can reference the action without running npm install.
+# The build-publish.yml workflow rebuilds and re-commits dist/ on every push to main.
+
+logs
+*.log
+*.pid
