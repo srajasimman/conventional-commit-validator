@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 function buildDefaultPattern() {
-  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"] into [^\\s]+';
+  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"](?: of [^\\s]+)? into [^\\s]+';
   const revertPattern = 'Revert ".*"';
   const types = [
     'feat', 'fix', 'chore', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'revert',
