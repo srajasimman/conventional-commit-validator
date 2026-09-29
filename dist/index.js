@@ -31832,7 +31832,7 @@ const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 
 function buildDefaultPattern() {
-  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"](?: of [^\\s]+)? into [^\\s]+';
+  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"](?: of [^\\s]+)?(?: into [^\\s]+)?';
   // git omits " into <branch>" when merging into the default branch
   const remoteTrackingPattern = 'Merge remote-tracking branch [\'"][^\'"]+[\'"](?: into [^\\s]+)?';
   const mergePullRequestPattern = 'Merge pull request #\\d+ from [^\\s]+';
