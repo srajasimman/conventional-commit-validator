@@ -2,14 +2,17 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 function buildDefaultPattern() {
-  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"] into [^\\s]+';
+  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"](?: of [^\\s]+)? into [^\\s]+';
+  // git omits " into <branch>" when merging into the default branch
+  const remoteTrackingPattern = 'Merge remote-tracking branch [\'"][^\'"]+[\'"](?: into [^\\s]+)?';
+  const mergePullRequestPattern = 'Merge pull request #\\d+ from [^\\s]+';
   const revertPattern = 'Revert ".*"';
   const types = [
     'feat', 'fix', 'chore', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'revert',
   ].join('|');
   // Scope allows lowercase/uppercase letters, digits, underscores, slashes, and hyphens
   const conventionalPattern = `(?:(${types})(\\([a-zA-Z0-9_/\\-]+\\))?(!)?: .+)`;
-  return `^(${mergeBranchPattern}|${revertPattern}|${conventionalPattern})$`;
+  return `^(${mergeBranchPattern}|${remoteTrackingPattern}|${mergePullRequestPattern}|${revertPattern}|${conventionalPattern})$`;
 }
 
 async function run() {
