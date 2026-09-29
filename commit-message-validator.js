@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 function buildDefaultPattern() {
-  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"](?: of [^\\s]+)? into [^\\s]+';
+  const mergeBranchPattern = 'Merge branch [\'"][^\'"]+[\'"](?: of [^\\s]+)?(?: into [^\\s]+)?';
   // git omits " into <branch>" when merging into the default branch
   const remoteTrackingPattern = 'Merge remote-tracking branch [\'"][^\'"]+[\'"](?: into [^\\s]+)?';
   const mergePullRequestPattern = 'Merge pull request #\\d+ from [^\\s]+';
